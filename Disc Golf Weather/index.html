@@ -1,0 +1,189 @@
+
+                        <!-- -add easy button for sidebar toggle
+                        -add lables to each marker
+                        -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Disc Golf Weather</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+    //dynamicmaplayers
+    <script src="https://unpkg.com/esri-leaflet@3.0.2/dist/esri-leaflet.js"
+    integrity="sha512-myckXhaJsP7Q7MZva03Tfme/MSF5a6HC2xryjAM4FxPLHGqlh5VALCbywHnzs2uPoF/4G/QVXyYDDSkp5nPfig=="
+    crossorigin=""></script>
+
+    //plugins
+    <link rel="stylesheet" href="plugins/leafletSidebar.css">
+    <script src="plugins/leafletSidebar.js"></script>
+
+    <link rel="stylesheet" href="plugins/leafletLegend.css">
+    <script src="plugins/leafletLegend.js"></script>
+
+</head>
+<body>
+
+    <div id="mymap"></div>
+
+    //sidebar content
+    <div id="sidebar">
+
+        <button type="button" class="button" onclick="sidebar.hide()">x</button>
+
+        <h2>Welcome to the Disc Golf Weather app!</h2>
+
+        <p>This application will show you if it's currently raining at the courses you select!</p>
+
+        <p>How to use:<br>
+            •Simply check the boxes of your frequently played or favorite courses.<br>
+            •Once you've checked the boxes of the courses you would like to add to the map, map markers will appear.<br>
+            •To delete a course from your map, just click the corresponding checkbox again!
+        </p>
+    </div>
+
+    <script>
+        //map initialization 
+        var mymap = L.map('mymap', {
+            center:[35.87, -78.72],
+            zoom: 10.5,
+            zoomControl: false
+        });
+
+        //baselayers for map
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(mymap);
+
+        mymap.invalidateSize();
+
+        // L.control.zoom ({position: 'bottomleft'}).addTo(mymap);
+
+        //legend
+        L.control.Legend({
+            position: 'bottomright',
+            legends: [{
+                label: 'Light Rain',
+                type: 'rectangle',
+                color: '#72BDD4',
+                fill: 'true'
+            }, {
+                label: 'Rain',
+                type: 'rectangle',
+                color: '#4CBB17',
+                fill: 'true'
+            }, {
+                label: 'Moderate Rain',
+                type: 'rectangle',
+                color: '#FFDE42',
+                fill: 'true'
+            }, {
+                label: 'Heavy Rain',
+                type: 'rectangle',
+                color: '#FF0000',
+                fill: 'true'
+            }]
+        }).addTo(mymap);
+
+        //radar layer
+        var radar = L.esri.dynamicMapLayer({
+            url: 'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer',
+            opacity: '.5'
+        }).addTo(mymap);
+
+        //info sidebar
+        var sidebar = L.control.sidebar('sidebar', {
+            position: 'left',
+            autoPan: false,
+            closeButton: false
+        }).addTo(mymap);
+
+        setTimeout(function () {
+            sidebar.show();
+        }, 500);
+
+        //markers. each one correlates to one disc golf course
+        var cedarhillsMarker = L.marker([35.85, -78.62]);
+        cedarhillsMarker.bindPopup("Cedar Hills Disc Golf Course");
+
+        var kentwoodMarker = L.marker([35.77,-78.69]);
+        kentwoodMarker.bindPopup("Kentwood Disc Golf Course");
+
+        var leighFarmMarker = L.marker([35.92,-78.98]);
+        leighFarmMarker.bindPopup("Leigh Farm Disc Golf Course");
+
+        var uncMarker = L.marker([35.90,-79.03]);
+        uncMarker.bindPopup("UNC-Chapel Hill Disc Golf Course");
+
+        var valleySpringsMarker = L.marker([36.05,-78.96]);
+        valleySpringsMarker.bindPopup("Valley Springs Disc Golf Course");
+
+        var cornwallisMarker = L.marker([35.97,-78.95]);
+        cornwallisMarker.bindPopup("Cornwallis Disc Golf Course");
+
+        var wendellMarker = L.marker([35.78,-78.38]);
+        wendellMarker.bindPopup("Wendell Disc Golf Course");
+
+        var zebulonMarker = L.marker([35.81,-78.30]);
+        zebulonMarker.bindPopup("Zebulon Disc Golf Course");
+
+        var dogwoodMarker = L.marker([35.87,-79.06]);
+        dogwoodMarker.bindPopup("Dogwood Disc Golf Course");
+
+        var andersonMarker = L.marker([35.92,-79.10]);
+        andersonMarker.bindPopup("Anderson Disc Golf Course");
+
+        var bethesdaMarker = L.marker([35.94,-78.84]);
+        bethesdaMarker.bindPopup("Bethesda Disc Golf Course");
+
+        var apexMarker = L.marker([35.71,-78.90]);
+        apexMarker.bindPopup("Apex Nature Park Disc Golf Course");
+
+        var buckhornMarker = L.marker([35.62,-78.92]);
+        buckhornMarker.bindPopup("Buckhorn Disc Golf Course");
+
+        var jonesMarker = L.marker([35.65,-78.82]);
+        jonesMarker.bindPopup("Jones Disc Golf Course");
+
+        var middleCreekMarker = L.marker([35.66,-78.76]);
+        middleCreekMarker.bindPopup("Middle Creek Disc Golf Course");
+
+        var claytonMarker = L.marker([35.63,-78.41]);
+        claytonMarker.bindPopup("East Clayton Disc Golf Course");
+
+        var rockRidgeMarker = L.marker([35.67,-79.18]);
+        rockRidgeMarker.bindPopup("Rock Ridge Disc Golf Course");
+
+        //creates a layer control that will allow the user to select
+        //which course markers to display on the map
+
+        var overlays = {
+            "Anderson Disc Golf Course": andersonMarker,
+            "Apex Nature Park Disc Golf Course": apexMarker,
+            "Bethesda Disc Golf Course": bethesdaMarker,
+            "Buckhorn Disc Golf Course": buckhornMarker,
+            "Cedar Hills Disc Golf Course": cedarhillsMarker,
+            "Cornwallis Disc Golf Course": cornwallisMarker,
+            "Dogwood Disc Golf Course": dogwoodMarker,
+            "East Clayton Disc Golf Course": claytonMarker,
+            "Jones Disc Golf Course": jonesMarker,
+            "Kentwood Disc Golf Course": kentwoodMarker,
+            "Leigh Farm Disc Golf Course": leighFarmMarker,
+            "Middle Creek Disc Golf Course": middleCreekMarker,
+            "Rock Ridge Disc Golf Course": rockRidgeMarker,
+            "UNC-Chapel Hill Disc Golf Course": uncMarker,
+            "Valley Springs Disc Golf Course": valleySpringsMarker,
+            "Wendell Disc Golf Course": wendellMarker,
+            "Zebulon Disc Golf Course": zebulonMarker
+        }
+
+        L.control.layers(null, overlays, {collapsed: false, position: 'topright'}).addTo(mymap);
+
+    </script>
+</body>
+</html>
