@@ -1,5 +1,5 @@
 # discgolfweather
-A web application that allows a user to see if it is currently raining at a course in the triangle of NC.
+A web application that allows a user to see if it is currently raining at a public disc golf course in the triangle of NC.
 
 ![](Disc%20Golf%20Weather/images/DGW_1.png)
 
